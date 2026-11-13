@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Subject Quiz</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <a class="brand" href="#" aria-label="Subject Quiz — на главную">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span>Subject Quiz</span>
+      </a>
+      <span class="header-label">Учись и проверяй себя</span>
+    </header>
+
+    <nav class="tabs" aria-label="Режим приложения">
+      <button class="tab-button is-active" type="button" data-view="student" aria-selected="true">Ученик</button>
+      <button class="tab-button" type="button" data-view="teacher" aria-selected="false">Учитель</button>
+      <button class="tab-button" type="button" data-view="leaderboard" aria-selected="false">Топы</button>
+    </nav>
+
+    <div id="app-notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+    <section id="student-view" class="panel view-panel" aria-labelledby="student-title">
+      <div class="eyebrow">Режим ученика</div>
+      <h1 id="student-title">Выбери предмет и проверь знания</h1>
+
+      <div id="student-home">
+        <label class="field-label" for="student-subject">Предмет</label>
+        <div class="start-row">
+          <select id="student-subject" class="form-control"></select>
+          <button id="start-button" class="button button-primary" type="button">Начать квиз <span aria-hidden="true">→</span></button>
+        </div>
+        <p id="subject-description" class="muted description"></p>
+      </div>
+
+      <div id="quiz-screen" hidden>
+        <div class="progress-row">
+          <span id="question-count" class="question-count"></span>
+          <span id="progress-label" class="progress-label"></span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-label="Прогресс квиза" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <h2 id="question-text" class="question-text"></h2>
+        <div id="answer-list" class="answer-list" role="group" aria-labelledby="question-text"></div>
+        <div class="quiz-footer">
+          <span id="selection-hint" class="selection-hint" aria-live="polite">Выбери один вариант ответа</span>
+          <button id="next-button" class="button button-primary" type="button" disabled>Следующий вопрос <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+
+      <div id="result-screen" class="result-screen" aria-live="polite" hidden>
+        <div class="result-icon" aria-hidden="true">✓</div>
+        <div class="eyebrow">Квиз завершён</div>
+        <h2 id="result-score" class="result-score"></h2>
+        <p id="result-message" class="muted result-message"></p>
+        <form id="score-form" class="score-form">
+          <label class="field-label" for="player-name">Сохрани результат в топе</label>
+          <div class="start-row">
+            <input id="player-name" class="form-control" name="playerName" maxlength="30" autocomplete="name" placeholder="Твоё имя" required>
+            <button class="button button-primary" type="submit">Сохранить результат</button>
+          </div>
+        </form>
+        <div class="result-actions">
+          <button id="restart-button" class="button button-secondary" type="button">Пройти заново</button>
+          <button id="change-subject-button" class="text-button" type="button">Выбрать другой предмет</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="teacher-view" class="panel view-panel" aria-labelledby="teacher-title" hidden>
+      <div class="eyebrow">Режим учителя</div>
+      <h1 id="teacher-title">Создай тест или дополни предмет</h1>
+      <p class="muted panel-intro">Добавь вопрос к существующему предмету или создай новый тест. Данные сохраняются в этом браузере.</p>
+
+      <form id="teacher-form">
+        <label class="field-label" for="teacher-subject">Предмет</label>
+        <select id="teacher-subject" class="form-control"></select>
+        <div id="new-subject-field" class="new-subject-field" hidden>
+          <label class="field-label" for="new-subject-name">Название нового предмета</label>
+          <input id="new-subject-name" class="form-control" maxlength="50" placeholder="Например, Химия">
+          <p class="muted helper-text">Для нового предмета добавь не менее 5 вопросов.</p>
+        </div>
+
+        <div class="question-builder-heading">
+          <div>
+            <h2>Вопросы</h2>
+            <p id="builder-hint" class="muted helper-text"></p>
+          </div>
+          <button id="add-question-button" class="button button-secondary" type="button">+ Добавить вопрос</button>
+        </div>
+        <div id="question-builder" class="question-builder"></div>
+        <button class="button button-primary save-test-button" type="submit">Сохранить тест</button>
+      </form>
+    </section>
+
+    <section id="leaderboard-view" class="panel view-panel" aria-labelledby="leaderboard-title" hidden>
+      <div class="eyebrow">Таблица лидеров</div>
+      <h1 id="leaderboard-title">Лучшие результаты</h1>
+      <label class="field-label" for="leaderboard-subject">Показать рейтинг</label>
+      <select id="leaderboard-subject" class="form-control leaderboard-select"></select>
+      <div id="leaderboard-content" class="leaderboard-content"></div>
+    </section>
+
+    <footer class="app-footer">Тесты и результаты доступны локально в этом браузере.</footer>
+  </main>
+</body>
+</html>
